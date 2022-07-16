@@ -33,7 +33,8 @@ build/
 .vscode/
 
 ### Pastas ###
-
+*/jornal/
+*/diagnostic.data/
 
 ### Arquivos Em conflito ###
 *.lock
