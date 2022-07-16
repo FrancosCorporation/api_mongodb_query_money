@@ -33,8 +33,9 @@ build/
 .vscode/
 
 ### Pastas ###
-/db/journal/
-/db/diagnostic.data/
+
+db/diagnostic.data/
+db/journal/
 
 ### Arquivos Em conflito ###
 *.lock
