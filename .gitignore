@@ -33,4 +33,7 @@ build/
 .vscode/
 
 ### Pastas ###
-db/
+
+
+### Arquivos Em conflito ###
+*.lock
