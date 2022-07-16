@@ -21,18 +21,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.api_mongo.api_mongodb_query_money.dtos.Dtos_cliente;
-import com.api_mongo.api_mongodb_query_money.models.Client_model;
-import com.api_mongo.api_mongodb_query_money.services.Services_global;
+import com.api_mongo.api_mongodb_query_money.dtos.Dtos_cliente_create;
+import com.api_mongo.api_mongodb_query_money.models.Client_create_model;
+import com.api_mongo.api_mongodb_query_money.services.Services_Clients;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/client")
 public class Controller_requests_client {
 
-    final Services_global services_global;
+    final Services_Clients services_global;
 
-    public Controller_requests_client(Services_global service_global) {
+    public Controller_requests_client(Services_Clients service_global) {
         this.services_global = service_global;
     }
 
@@ -43,7 +43,7 @@ public class Controller_requests_client {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> ReturnClientById(@PathVariable(value = "id") String id) {
-       Optional<Client_model> clientModelOptional = services_global.findClientForId(id);
+       Optional<Client_create_model> clientModelOptional = services_global.findClientForId(id);
         if (clientModelOptional != null) {
             return ResponseEntity.status(HttpStatus.FOUND).body(clientModelOptional.get());
         } else {
@@ -53,14 +53,20 @@ public class Controller_requests_client {
     }
 
     @PostMapping
-    public ResponseEntity<Object> CreateAccount(@RequestBody @Valid Dtos_cliente dtos_cliente) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(services_global.saveNewClients(dtos_cliente));
+    public ResponseEntity<Object> CreateAccount(@RequestBody @Valid Dtos_cliente_create dtos_cliente) {
+        if(services_global.verifyEmailExist(dtos_cliente.getEmail())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(" Email already exists ");
+
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.CREATED).body(services_global.saveNewClients(dtos_cliente));
+        }
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Object> ModifyClientForId(@PathVariable(value = "id") String id,
-            @RequestBody @Valid Dtos_cliente dtos_cliente) {
-        Client_model clientModel= services_global.putClients(id, dtos_cliente);
+            @RequestBody @Valid Dtos_cliente_create dtos_cliente) {
+        Client_create_model clientModel= services_global.putClients(id, dtos_cliente);
         if (clientModel != null) {
             return ResponseEntity.status(HttpStatus.FOUND).body(clientModel.getName() + " Is Changed");
 
@@ -73,7 +79,7 @@ public class Controller_requests_client {
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> DeleteClientForId(@PathVariable(value = "id") String id) {
         
-            Client_model clientModel = services_global.deleteClients(id);
+            Client_create_model clientModel = services_global.deleteClients(id);
             if (clientModel != null) {
                 return ResponseEntity.status(HttpStatus.FOUND).body(clientModel.getName() + " is Deleted !");
             }

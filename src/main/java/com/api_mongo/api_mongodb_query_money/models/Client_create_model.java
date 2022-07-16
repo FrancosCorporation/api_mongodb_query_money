@@ -5,7 +5,7 @@ import java.util.*;
 
 import org.springframework.data.annotation.Id;
 
-public class Client_model{
+public class Client_create_model{
 
     @Id
     private UUID id;

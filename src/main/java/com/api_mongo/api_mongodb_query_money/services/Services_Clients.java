@@ -6,31 +6,34 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import com.api_mongo.api_mongodb_query_money.dtos.Dtos_cliente;
-import com.api_mongo.api_mongodb_query_money.models.Client_model;
-import com.api_mongo.api_mongodb_query_money.repositories.Repository_global;
+import com.api_mongo.api_mongodb_query_money.dtos.Dtos_cliente_create;
+import com.api_mongo.api_mongodb_query_money.models.Client_create_model;
+import com.api_mongo.api_mongodb_query_money.repositories.Repository_Clients;
 
 @Service
-public class Services_global {
+public class Services_Clients {
 
-    final Repository_global repository_global;
+    final Repository_Clients repository_global;
 
-    public Services_global(Repository_global repository_global) {
+    public Services_Clients(Repository_Clients repository_global) {
         this.repository_global = repository_global;
     }
 
     // Get ALL Clients
-    public List<Client_model> getAllClients() {
+    public List<Client_create_model> getAllClients() {
+        List<Client_create_model> list = repository_global.findAll();
+        for (Client_create_model client_create_model : list) {
+
+        }
         return repository_global.findAll();
     }
 
     // Find by id and Get Client
-    public Optional<Client_model> findClientForId(String id) {
+    public Optional<Client_create_model> findClientForId(String id) {
         try {
-            Optional<Client_model> clientModelOptional = repository_global.findById(UUID.fromString(id));
+            Optional<Client_create_model> clientModelOptional = repository_global.findById(UUID.fromString(id));
             if (clientModelOptional.isPresent()) {
                 return clientModelOptional;
             } else {
@@ -42,8 +45,8 @@ public class Services_global {
     }
 
     // Save the new Clients !
-    public Client_model saveNewClients(Dtos_cliente dtos_cliente) {
-        var clientModel = new Client_model();
+    public Client_create_model saveNewClients(Dtos_cliente_create dtos_cliente) {
+        var clientModel = new Client_create_model();
         BeanUtils.copyProperties(dtos_cliente, clientModel);
         clientModel.setId(UUID.randomUUID());
         clientModel.setDataCreate(LocalDateTime.now(ZoneId.of("UTC")));
@@ -52,9 +55,9 @@ public class Services_global {
     }
 
     // Find by id and Put Clients !
-    public Client_model putClients(String id, Dtos_cliente dtos_cliente) {
+    public Client_create_model putClients(String id, Dtos_cliente_create dtos_cliente) {
 
-        Optional<Client_model> clientModelOptional = findClientForId(id);
+        Optional<Client_create_model> clientModelOptional = findClientForId(id);
         if (clientModelOptional != null) {
             var clientModelLocal = clientModelOptional.get();
             BeanUtils.copyProperties(dtos_cliente, clientModelLocal);
@@ -68,8 +71,8 @@ public class Services_global {
     }
 
     // Find by id and Delete Clients !
-    public Client_model deleteClients(String id) {
-        Optional<Client_model> clientModelOptional = findClientForId(id);
+    public Client_create_model deleteClients(String id) {
+        Optional<Client_create_model> clientModelOptional = findClientForId(id);
         if (clientModelOptional != null) {
             repository_global.delete(clientModelOptional.get());
             return clientModelOptional.get();
@@ -79,4 +82,14 @@ public class Services_global {
 
     }
 
+    public boolean verifyEmailExist(String email) {
+        List<Client_create_model> list = repository_global.findAll();
+        for (Client_create_model client_create_model : list) {
+            if (client_create_model.getEmail().equals(email))  {
+                return true;
+            }
+        }
+        return false;
+
+    }
 }
