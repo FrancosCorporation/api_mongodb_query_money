@@ -2,16 +2,20 @@ package com.api_mongo.api_mongodb_query_money.models;
 
 import java.time.LocalDateTime;
 import java.util.*;
-
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.Id;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Client_create_model{
+@Configuration
+public class Models_client_create{
 
     @Id
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UUID id;
 
     private String name;
 
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     
     private String email;
