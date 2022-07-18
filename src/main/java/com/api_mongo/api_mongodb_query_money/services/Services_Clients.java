@@ -9,6 +9,7 @@ import java.util.UUID;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import com.api_mongo.api_mongodb_query_money.dtos.Dtos_cliente_create;
+import com.api_mongo.api_mongodb_query_money.dtos.Dtos_cliente_login;
 import com.api_mongo.api_mongodb_query_money.models.Client_create_model;
 import com.api_mongo.api_mongodb_query_money.repositories.Repository_Clients;
 
@@ -23,10 +24,6 @@ public class Services_Clients {
 
     // Get ALL Clients
     public List<Client_create_model> getAllClients() {
-        List<Client_create_model> list = repository_global.findAll();
-        for (Client_create_model client_create_model : list) {
-
-        }
         return repository_global.findAll();
     }
 
@@ -35,9 +32,54 @@ public class Services_Clients {
         try {
             Optional<Client_create_model> clientModelOptional = repository_global.findById(UUID.fromString(id));
             if (clientModelOptional.isPresent()) {
+                clientModelOptional.get().setPassword(null);
+                clientModelOptional.get().setId(null);
                 return clientModelOptional;
             } else {
                 return null;
+            }
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    // Find by Email and Get Client
+    public Client_create_model findClientForEmail(Dtos_cliente_login dtos_cliente_login) {
+        try {
+            List<Client_create_model> listClients = getAllClients();
+            for (Client_create_model client_create_model : listClients) {
+                if (client_create_model.getEmail().equals(dtos_cliente_login.getEmail())) {
+                    return client_create_model;
+                }
+            }
+            return null;
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    public Client_create_model GetClientForEmailAndPasswordEquals(Dtos_cliente_login dtos_cliente_login,
+            boolean DadosOfforNo) {
+        try {
+            if (DadosOfforNo) {
+
+                Client_create_model client = findClientForEmail(dtos_cliente_login);
+                if (client.getPassword().equals(dtos_cliente_login.getPassword())) {
+                    client.setPassword(null);
+                    client.setId(null);
+                    return client;
+                } else {
+                    return null;
+                }
+            } else {
+                Client_create_model client = findClientForEmail(dtos_cliente_login);
+                if (client.getPassword().equals(dtos_cliente_login.getPassword())) {
+                    return client;
+                } else {
+                    return null;
+                }
+
             }
         } catch (Exception e) {
             return null;
@@ -85,7 +127,7 @@ public class Services_Clients {
     public boolean verifyEmailExist(String email) {
         List<Client_create_model> list = repository_global.findAll();
         for (Client_create_model client_create_model : list) {
-            if (client_create_model.getEmail().equals(email))  {
+            if (client_create_model.getEmail().equals(email)) {
                 return true;
             }
         }

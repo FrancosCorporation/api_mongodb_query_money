@@ -1,0 +1,23 @@
+#remeber {
+  font-size: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+#btn {
+  display: flex;
+  justify-content: center;
+}
+@media only screen and (max-width: 699px) {
+  #showdata {
+      margin-top: 25%;
+      margin-right: 5%;
+      margin-left: 5%;
+ }
+}
+@media only screen and (min-width: 700px) {
+  #showdata {
+      margin-top: 200px;
+      margin-right: 32%;
+      margin-left: 32%;
+ }
+}
