@@ -1,7 +1,16 @@
 package com.api_mongo.api_mongodb_query_money.controllers;
 
+import java.io.IOException;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.Optional;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -47,18 +56,10 @@ public class Controller_layout_client {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Object> CreateAccount(
-            @RequestBody @Valid Models_layout_data_client models_layout_data_client) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(services_layout_data_client.saveNewLayout(models_layout_data_client));
+    public ResponseEntity<Object> CreateAccount(@RequestBody HttpServletRequest request , Models_layout_data_client models_layout_data_client) throws IOException {
 
-        }
+        System.out.println("json = " + request.getScheme());
+        return null;
 
-        catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).body(" Not was possible save ");
-        }
     }
-
-   
 }
