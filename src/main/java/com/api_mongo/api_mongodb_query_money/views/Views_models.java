@@ -1,6 +1,7 @@
 package com.api_mongo.api_mongodb_query_money.views;
 
-import org.springframework.stereotype.Controller;
+import java.net.http.HttpResponse;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,8 @@ public class Views_models {
     @GetMapping("account")
     public ModelAndView Account() {
         ModelAndView account = new ModelAndView("account");
+       // System.out.println("This is account "+account.);
+        //account.setHeader(String, String);
         return account;
     }
     @GetMapping("register")

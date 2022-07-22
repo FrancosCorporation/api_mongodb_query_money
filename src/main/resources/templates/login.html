@@ -13,17 +13,17 @@
       }
       @media only screen and (max-width: 722px) {
         #showdata {
-            margin-top: 25%;
-            margin-right: 5%;
-            margin-left: 5%;
-       }
+          margin-top: 25%;
+          margin-right: 5%;
+          margin-left: 5%;
+        }
       }
       @media only screen and (min-width: 723px) {
         #showdata {
-            margin-top: 200px;
-            margin-right: 32%;
-            margin-left: 32%;
-       }
+          margin-top: 200px;
+          margin-right: 32%;
+          margin-left: 32%;
+        }
       }
     </style>
     <meta charset="utf-8" />
@@ -36,7 +36,7 @@
       crossorigin="anonymous"
     />
   </head>
-  <body>
+  <header>
     <!-- Nav Bar -->
     <div class="collapse" id="navbarToggleExternalContent">
       <div class="bg-dark p-4">
@@ -81,21 +81,13 @@
       </div>
     </nav>
     <!-- Nav Bar -->
-    <div
-      class="flex-container"
-      id="showdata"
-    >
+  </header>
+  <body>
+    <div class="flex-container" id="showdata">
       <form>
         <div class="mb-3">
-          <label for="Email" class="form-label"
-            >Email address</label
-          >
-          <input
-            type="text"
-            class="form-control"
-            id="Email"
-            aria-describedby="emailHelp"
-          />
+          <label for="Email" class="form-label">Email address</label>
+          <input type="name" class="form-control" id="Email" />
           <div id="emailHelp" class="form-text">
             Não compatilhe seu email e senha com ninguem !
           </div>
@@ -103,9 +95,7 @@
         <div class="mb-3">
           <div id="remeber">
             <div>
-              <label for="Password" class="form-label"
-                >Password</label
-              >
+              <label for="Password" class="form-label">Password</label>
             </div>
             <div>
               <span id="leterpassword" class="form-text">
@@ -113,11 +103,7 @@
               </span>
             </div>
           </div>
-          <input
-            type="password"
-            class="form-control"
-            id="Password"
-          />
+          <input type="password" class="form-control" id="Password" />
         </div>
 
         <div class="mb-3 form-check" id="remeber">
@@ -138,35 +124,93 @@
           </div>
         </div>
         <div id="btn">
-        <button type="submit" class="btn btn-primary">Login</button>
-      </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
       </form>
     </div>
   </body>
   <script>
     let password = document.getElementById("Password"),
-      email = document.getElementById("Email");
-
-    
+      email = document.getElementById("Email"),
+      email2 = "";
+    dontField();
     document.addEventListener("submit", function (e) {
       event.preventDefault();
+      email2 = email.value;
       body = {
         email: email.value,
         password: password.value,
       };
 
-      let request = new XMLHttpRequest();
-      request.open("POST", "/api/client/login", true);
-      request.setRequestHeader("Content-Type", "application/json");
-      request.send(JSON.stringify(body));
+      let request = getData("/api/client/login", "POST", body);
       request.onload = function () {
-        console.log(body);
-        console.log(request.responseText);
+        if (request.status == 302) {
+          localStorage.setItem("token", request.responseText);
+          //let doc = document.getElementById("showdata");
+          //doc = getData("/account","GET", null).responseText;
+          //console.log(doc);
+          //console.log(getData("/account","GET", null).responseText);
+          redirectClient("/account", "GET", null);
+        } else {
+          emailMatch();
+        }
       };
     });
 
-    password.onchange = validatePassword;
-    password.onkeyup = countField;
-    confirmpassword.onkeyup = validatePassword;
+    function emailMatch() {
+      if (email.value == email2) {
+        email.setCustomValidity("Does not match");
+      } else {
+        email.setCustomValidity("");
+      }
+    }
+
+    function dontField() {
+      if (email.value.length == 0) {
+        email.setCustomValidity("Vazio");
+      } else if (password.value.length == 0) {
+        password.setCustomValidity("Vazio");
+      } else {
+        password.setCustomValidity("");
+        email.setCustomValidity("");
+      }
+    }
+    function injectData() {
+      //document.getElementById("showdata").innerHTML =
+    }
+
+    function redirectClient(page,methds, body){
+      location.replace(page)
+    }
+
+    /*--function redirectClient(page, method, body) {
+      fetch(page, {
+        method: method,
+        mode: "cors",
+        header: ("Authorization", "Bearer " + localStorage.getItem("token")),
+        body: body,
+      })
+        .then((dataWrappedByPromise) => dataWrappedByPromise.text())
+        .then((data) => {
+          //Redirect is the URL inside the text of the response promise
+          window.location.replace(data);
+        });
+    }*/
+    
+    function getData(page, method, body) {
+      let request = new XMLHttpRequest();
+      request.open(method, page, true);
+      request.setRequestHeader("Content-Type", "application/json");
+      request.setRequestHeader(
+        "Authorization",
+        "Bearer " + localStorage.getItem("token")
+      );
+      request.send(JSON.stringify(body));
+      return request;
+    }
+
+    email.onkeyup = emailMatch;
+    password.onkeyup = dontField;
+    email.onchange = dontField;
   </script>
 </html>

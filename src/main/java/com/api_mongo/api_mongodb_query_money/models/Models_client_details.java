@@ -3,20 +3,30 @@ package com.api_mongo.api_mongodb_query_money.models;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.UUID;
+
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class Models_client_details implements UserDetails{
+public class Models_client_details implements UserDetails {
 
-        final Optional<Models_client_create> client;
+    final Optional<Models_client_create> client;
 
+  
+    
     public Models_client_details(Optional<Models_client_create> client) {
-            this.client = client;
-        }
+        this.client = client;
+    }
+
+    @Bean
+    public UUID getId() {
+        return client.orElse(new Models_client_create()).getId();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return new ArrayList<>(); 
+        return new ArrayList<>();
     }
 
     @Override
@@ -48,5 +58,5 @@ public class Models_client_details implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
-    
+
 }

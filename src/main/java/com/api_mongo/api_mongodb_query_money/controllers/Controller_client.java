@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.api_mongo.api_mongodb_query_money.dtos.Dtos_cliente_create;
 import com.api_mongo.api_mongodb_query_money.dtos.Dtos_cliente_login;
 import com.api_mongo.api_mongodb_query_money.models.Models_client_create;
+import com.api_mongo.api_mongodb_query_money.security.Auth_token;
 import com.api_mongo.api_mongodb_query_money.services.*;
 
 @RestController
@@ -24,9 +25,9 @@ import com.api_mongo.api_mongodb_query_money.services.*;
 public class Controller_client {
 
     private final Services_clients services_clients;
-    private final Services_token services_token;
+    private final Auth_token services_token;
 
-    public Controller_client(Services_clients services_clients, Services_token services_token) {
+    public Controller_client(Services_clients services_clients, Auth_token services_token) {
         this.services_clients = services_clients;
         this.services_token = services_token;
     }
@@ -52,8 +53,7 @@ public class Controller_client {
     public ResponseEntity<Object> Login(@RequestBody @Valid Dtos_cliente_login dtos_cliente_login) {
         Models_client_create client = services_clients.getClientForEmailAndPasswordEquals(dtos_cliente_login);
         if (client != null) {
-            System.out.println(services_token.generateToken(client));
-            return ResponseEntity.status(HttpStatus.FOUND).body(services_token.generateToken(client));
+            return ResponseEntity.status(HttpStatus.FOUND).body(services_token.generateToken(client.getEmail(),client.getId().toString()));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found");
         }
@@ -65,8 +65,8 @@ public class Controller_client {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(" Email already exists ");
 
         } else {
-            System.out.println("Create the user: " + dtos_cliente_create.getName());
-            return ResponseEntity.status(HttpStatus.CREATED).body(services_clients.saveNewClients(dtos_cliente_create));
+            var client = services_clients.saveNewClients(dtos_cliente_create);
+            return ResponseEntity.status(HttpStatus.CREATED).body(services_token.generateToken(client.getEmail(),client.getId().toString()));
         }
     }
 

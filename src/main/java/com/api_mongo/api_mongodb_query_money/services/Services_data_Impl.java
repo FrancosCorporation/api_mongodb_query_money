@@ -20,10 +20,10 @@ public class Services_data_Impl implements UserDetailsService{
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Models_client_create> usuario = repository.findByEmail(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<Models_client_create> usuario = repository.findByEmail(email);
         if (usuario.isEmpty()) {
-            throw new UsernameNotFoundException("Usuário [" + username + "] não encontrado");
+            throw new UsernameNotFoundException("Usuário [" + email + "] não encontrado");
         }
 
         return new Models_client_details(usuario);

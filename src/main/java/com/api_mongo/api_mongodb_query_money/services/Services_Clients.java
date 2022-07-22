@@ -13,6 +13,7 @@ import com.api_mongo.api_mongodb_query_money.dtos.Dtos_cliente_create;
 import com.api_mongo.api_mongodb_query_money.dtos.Dtos_cliente_login;
 import com.api_mongo.api_mongodb_query_money.models.Models_client_create;
 import com.api_mongo.api_mongodb_query_money.repositories.Repository_clients;
+import com.api_mongo.api_mongodb_query_money.security.Auth_token;
 
 @Service
 public class Services_clients {
@@ -20,7 +21,7 @@ public class Services_clients {
     private final Repository_clients Repository_clients;
     private final PasswordEncoder encoder;
 
-    public Services_clients(Repository_clients Repository_clients, Services_token service_token,
+    public Services_clients(Repository_clients Repository_clients, Auth_token service_token,
             PasswordEncoder encoder) {
         this.Repository_clients = Repository_clients;
         this.encoder = encoder;
@@ -98,7 +99,7 @@ public class Services_clients {
         }
 
     }
-
+    // Verify email exist !
     public boolean verifyEmailExist(String email) {
         if (!Repository_clients.findByEmail(email).isEmpty()) {
             return true;

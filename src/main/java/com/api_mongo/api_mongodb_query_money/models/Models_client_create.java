@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.Id;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Configuration
 public class Models_client_create{

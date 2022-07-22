@@ -162,7 +162,7 @@
       request.send(JSON.stringify(body));
       request.onload = function () {
         if (request.status == 201) {
-          console.log("entrou")
+          localStorage.setItem("token", request.responseText);
           window.location.replace("/account");
         } else if (request.status == 409) {
           email.setCustomValidity(request.responseText);
