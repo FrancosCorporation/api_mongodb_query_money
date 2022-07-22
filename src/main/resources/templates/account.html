@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <style>
+      ::selection {
+        color: #fff;
+        background: #ff4a4a;
+      }
+      #nav {
+        z-index: 0;
+      }
+      #search-Bar {
+        position: relative;
+        font-size: 100%;
+        display: flex;
+        justify-content: space-between;
+        z-index: 1;
+      }
+      .autocom-box li {
+        list-style: none;
+        padding: 8px 12px;
+        display: none;
+        width: 100%;
+        cursor: default;
+        border-radius: 3px;
+      }
+      #inputSearch {
+        position: relative;
+        margin-top: 12px;
+        margin-left: 75%;
+        margin-right: 4%;
+      }
+      #inputSearch:focus-within {
+        margin-top: 10%;
+        margin-left: 36%;
+        margin-right: 36%;
+      }
+      #inputSearch:focus-within .autocom-box {
+        padding: 10px 8px;
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      #explaidIcons {
+        font-size: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+      #btn {
+        display: flex;
+        justify-content: center;
+      }
+      @media only screen and (max-width: 722px) {
+        #showdata {
+          margin-top: 25%;
+          margin-right: 5%;
+          margin-left: 5%;
+        }
+      }
+      @media only screen and (min-width: 723px) {
+        #showdata {
+          margin-top: 200px;
+          margin-right: 32%;
+          margin-left: 32%;
+        }
+      }
+    </style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Ampanhamento das moedas</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+      crossorigin="anonymous"
+    />
+  </head>
+  <header>
+    <!-- Nav Bar -->
+    <div class="collapse" id="nav">
+      <div class="bg-dark p-4">
+        <h5 class="text-white h4">Collapsed content</h5>
+        <span class="text-muted">Toggleable via the navbar brand.</span>
+      </div>
+    </div>
+    <nav class="navbar navbar-dark bg-dark fixed-top" id="nav">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarToggleExternalContent"
+          aria-controls="navbarToggleExternalContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div>
+          <a class="navbar-brand" id="" type="button" href="/">Home</a>
+          <a class="navbar-brand disabled">|</a>
+          <a class="navbar-brand" href="/register">Registrar</a>
+        </div>
+        <!--    INPUT   -->
+        <div id="search-Bar">
+          <div>
+            <a class="navbar-brand" href="/login">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="30"
+                height="30"
+                fill="currentColor"
+                class="bi bi-person-circle"
+                viewBox="0 0 16 16"
+              >
+                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                <path
+                  fill-rule="evenodd"
+                  d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div id="inputSearch">
+      <input
+        id="inputSearchwrite"
+        class="form-control me-2"
+        type="search"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <a href="" target="_blank" hidden></a>
+      <div id="boxinput" class="autocom-box"></div>
+      <div class="icon"><i class="fas fa-search"></i></div>
+    </div>
+    <!-- Nav Bar -->
+  </header>
+  <body>
+    <div>
+
+
+
+      
+      oasdnasjbashidgasuyhd
+    </div>
+  </body>
+  <script>
+    let suggestions = [
+    "Channel",
+    "CodingLab",
+    "CodingNepal",
+    "YouTube",
+    "YouTuber",
+    "YouTube Channel",
+    "Blogger",
+    "Bollywood",
+    "Vlogger",
+    "Vechiles",
+    "Facebook",
+    "Freelancer",
+    "Facebook Page",
+    "Designer",
+    "Developer",
+    "Web Designer",
+    "Web Developer",
+    "Login Form in HTML & CSS",
+    "How to learn HTML & CSS",
+    "How to learn JavaScript",
+    "How to become Freelancer",
+    "How to become Web Designer",
+    "How to start Gaming Channel",
+    "How to start YouTube Channel",
+    "What does HTML stands for?",
+    "What does CSS stands for?",
+];
+    // getting all required elements
+    const searchWrapper = document.getElementById("inputSearch");
+    const inputBox = document.getElementById("inputSearchwrite");
+    const suggBox = searchWrapper.querySelector(".autocom-box");
+    const icon = searchWrapper.querySelector(".icon");
+    let linkTag = searchWrapper.querySelector("a");
+    let webLink;
+
+    // if user press any key and release
+    inputBox.onkeyup = (e) => {
+      let userData = e.target.value; //user enetered data
+      let emptyArray = [];
+      if (userData) {
+        icon.onclick = () => {
+          webLink = `https://www.google.com/search?q=${userData}`;
+          linkTag.setAttribute("href", webLink);
+          linkTag.click();
+        };
+        emptyArray = suggestions.filter((data) => {
+          //filtering array value and user characters to lowercase and return only those words which are start with user enetered chars
+          return data
+            .toLocaleLowerCase()
+            .startsWith(userData.toLocaleLowerCase());
+        });
+        emptyArray = emptyArray.map((data) => {
+          // passing return data inside li tag
+          return (data = `<li>${data}</li>`);
+        });
+        searchWrapper.classList.add("active"); //show autocomplete box
+        showSuggestions(emptyArray);
+        let allList = suggBox.querySelectorAll("li");
+        for (let i = 0; i < allList.length; i++) {
+          //adding onclick attribute in all li tag
+          allList[i].setAttribute("onclick", "select(this)");
+        }
+      } else {
+        searchWrapper.classList.remove("active"); //hide autocomplete box
+      }
+    };
+
+    function select(element) {
+      let selectData = element.textContent;
+      inputBox.value = selectData;
+      icon.onclick = () => {
+        webLink = `https://www.google.com/search?q=${selectData}`;
+        linkTag.setAttribute("href", webLink);
+        linkTag.click();
+      };
+      searchWrapper.classList.remove("active");
+    }
+
+    function showSuggestions(list) {
+      let listData;
+      if (!list.length) {
+        userValue = inputBox.value;
+        listData = `<li>${userValue}</li>`;
+      } else {
+        listData = list.join("");
+      }
+      suggBox.innerHTML = listData;
+    }
+  </script>
+</html>
