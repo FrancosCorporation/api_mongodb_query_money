@@ -12,7 +12,7 @@ public class Services_data_b3_names {
     public Services_data_b3_names(Repository_data_b3_names repository) {
         this.repository = repository;
     }
-    
+
 
     public void saveNewData(Models_data_b3_names models_data_b3_names) {
             repository.save(models_data_b3_names);

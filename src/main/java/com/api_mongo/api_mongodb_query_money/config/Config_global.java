@@ -67,7 +67,7 @@ public class Config_global {
     @Bean
     public void insereArquivos() {
         System.out.println(new SimpleDateFormat("yyyy/MM/dd").format(new Date())); // 2022/07/20
-        rotina();
+        //rotina();
 
     }
 
@@ -91,7 +91,6 @@ public class Config_global {
                 String line = "";
                 String nameAct = "";
                 ArrayList<Models_data_b3> listmodelData = new ArrayList<Models_data_b3>();
-
                 try {
                     BufferedReader br = new BufferedReader(new FileReader(way));
                     while (true) {

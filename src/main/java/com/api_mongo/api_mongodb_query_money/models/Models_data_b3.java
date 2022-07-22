@@ -11,13 +11,13 @@ public class Models_data_b3 extends Models_data_b3_names{
     private String Volume;
 
     public Models_data_b3(String[] listData) {
-        Date = listData[0];
-        Open = listData[1];
-        High = listData[2];
-        Low = listData[3];
-        Close = listData[4];
-        Price = listData[5];
-        Volume = listData[6];
+        this.Date = listData[0];
+        this.Open = listData[1];
+        this.High = listData[2];
+        this.Low = listData[3];
+        this.Close = listData[4];
+        this.Price = listData[5];
+        this.Volume = listData[6];
     }
 
     public String getDate() {
