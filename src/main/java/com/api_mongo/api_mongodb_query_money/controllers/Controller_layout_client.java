@@ -49,16 +49,10 @@ public class Controller_layout_client {
     @PostMapping("/register")
     public ResponseEntity<Object> CreateAccount(
             @RequestBody @Valid Models_layout_data_client models_layout_data_client) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED)
-                    .body(services_layout_data_client.saveNewLayout(models_layout_data_client));
 
-        }
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(services_layout_data_client.saveNewLayout(models_layout_data_client));
 
-        catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.FAILED_DEPENDENCY).body(" Not was possible save ");
-        }
     }
 
-   
 }
