@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
 import com.api_mongo.api_mongodb_query_money.models.Models_data_b3_names;
+import com.api_mongo.api_mongodb_query_money.models.Models_data_list_names;
 import com.api_mongo.api_mongodb_query_money.models.Models_data_b3;
 import com.api_mongo.api_mongodb_query_money.services.Services_data_b3_names;
+import com.api_mongo.api_mongodb_query_money.services.Services_data_list_names;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
@@ -35,9 +37,12 @@ public class Config_global {
     public static LocalDateTimeSerializer LOCAL_DATETIME_SERIALIZER = new LocalDateTimeSerializer(
             DateTimeFormatter.ofPattern(DATETIME_FORMAT));
     public final Services_data_b3_names services_data_b3_names;
+    public final Services_data_list_names services_data_list_names;
 
-    public Config_global(Services_data_b3_names services_data_b3_names) {
+    public Config_global(Services_data_b3_names services_data_b3_names,
+            Services_data_list_names services_data_list_names) {
         this.services_data_b3_names = services_data_b3_names;
+        this.services_data_list_names = services_data_list_names;
     }
 
     @Bean
@@ -68,7 +73,7 @@ public class Config_global {
     @Bean
     public void insereArquivos() {
         System.out.println(new SimpleDateFormat("yyyy/MM/dd").format(new Date())); // 2022/07/20
-        rotina();
+        // rotina();
 
     }
 
@@ -99,6 +104,8 @@ public class Config_global {
                                         nameActionData.setDataCreate(LocalDateTime.now(ZoneId.of("UTC")));
                                         nameActionData.setChangeDate(LocalDateTime.now(ZoneId.of("UTC")));
                                         nameActionData.setDateandprices(listmodelData);
+                                        services_data_list_names.saveNewList(
+                                                new Models_data_list_names(nameActionData.getId(), nameAct));
                                         services_data_b3_names.saveNewData(nameActionData);
                                         listmodelData.clear();
                                         nameAct = line.replace(";", "");
@@ -140,7 +147,8 @@ public class Config_global {
                                 nameActionData.setDataCreate(LocalDateTime.now(ZoneId.of("UTC")));
                                 nameActionData.setChangeDate(LocalDateTime.now(ZoneId.of("UTC")));
                                 nameActionData.setDateandprices(listmodelData);
-                                System.out.println(nameActionData.getId().toString());
+                                services_data_list_names
+                                        .saveNewList(new Models_data_list_names(nameActionData.getId(), nameAct));
                                 services_data_b3_names.saveNewData(nameActionData);
                                 listmodelData.clear();
                                 break;
@@ -154,7 +162,7 @@ public class Config_global {
                     System.out.println("\n Salvou e Finalizou! \n");
                     br.close();
                 } catch (Exception e) {
-                    System.out.println("File not found");
+                    System.out.println("File not found" + e);
                 }
             }
         }.start();

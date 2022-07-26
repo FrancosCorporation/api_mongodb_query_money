@@ -1,8 +1,5 @@
 package com.api_mongo.api_mongodb_query_money.models;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Models_data_b3 {
 
     private String Date;

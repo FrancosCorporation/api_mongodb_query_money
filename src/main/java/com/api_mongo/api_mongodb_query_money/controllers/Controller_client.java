@@ -34,7 +34,7 @@ public class Controller_client {
         this.services_token = services_token;
     }
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<Object> AllClients() {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(services_clients.getAllClients());
     }

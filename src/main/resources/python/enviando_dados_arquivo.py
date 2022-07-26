@@ -22,13 +22,13 @@ def downData(list):
 def mycode():
     try:
         # df = investpy.get_stocks(country='Brazil')[sys.argv[1]]
-        indexs = investpy.get_stocks(country='Brazil')["symbol"]
+        indexs = investpy.get_stocks(country='united States')["symbol"]
         carteira = []
         listofdata = []
         caract = ";"
 
         for a in indexs:
-            carteira.append(a+".SA")
+            carteira.append(a)
         for i in range(len(carteira)):
             listofdata.append(downData(carteira[i]))
         with open('src/main/resources/python/dados2Brutos.csv', 'w',  encoding='utf-8') as file:

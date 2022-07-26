@@ -1,11 +1,8 @@
 package com.api_mongo.api_mongodb_query_money.controllers;
 
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.api_mongo.api_mongodb_query_money.models.Models_layout_data_client;
 import com.api_mongo.api_mongodb_query_money.models.Models_layout_data_client_list;
 import com.api_mongo.api_mongodb_query_money.services.*;
@@ -38,7 +34,7 @@ public class Controller_layout_client extends Thread {
         this.services_data_b3_names = services_data_b3_names;
     }
 
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<Object> AllLayouts() {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(services_layout_data_client.getAllLayouts());
     }
@@ -70,7 +66,7 @@ public class Controller_layout_client extends Thread {
                 // verify thats Action name exist and set the list with thens
                 models_layout_data_client = services_layout_data_client
                         .returnNameActionsExist(models_layout_data_client);
-                if (models_layout_data_client != null) {
+                if (models_layout_data_client.getActionsAndPrice().size() > 0) {
                     // verify thats wallet exist and return case exist
                     Optional<Models_layout_data_client> clientwallet = services_layout_data_client
                             .findLayoutById(models_layout_data_client.getId());

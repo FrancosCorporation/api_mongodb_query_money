@@ -9,5 +9,5 @@ public class api_mongo_inicializer {
 	public static void main(String[] args) {
 		SpringApplication.run(api_mongo_inicializer.class, args);
 	}
-	
+
 }

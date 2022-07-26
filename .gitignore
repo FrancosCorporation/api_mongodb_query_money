@@ -18,6 +18,8 @@ target/
 *.iws
 *.iml
 *.ipr
+*dadosBrutos.csv
+*dados2Brutos.csv
 
 ### NetBeans ###
 /nbproject/private/
@@ -33,4 +35,10 @@ build/
 .vscode/
 
 ### Pastas ###
-db/
+db/diagnostic.data/
+db/journal/
+*.wt
+*.lock
+*.bson
+*.turtle
+*WiredTiger
