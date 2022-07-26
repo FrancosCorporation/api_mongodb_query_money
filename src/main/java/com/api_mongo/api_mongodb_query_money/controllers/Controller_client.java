@@ -1,6 +1,8 @@
 package com.api_mongo.api_mongodb_query_money.controllers;
 
 import java.util.Optional;
+import java.util.UUID;
+
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +40,7 @@ public class Controller_client {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> ClientById(@PathVariable(value = "id") String id) {
+    public ResponseEntity<Object> ClientById(@PathVariable(value = "id") UUID id) {
 
         Optional<Models_client_create> clientModelOptional = services_clients.findClientForId(id);
         if (clientModelOptional != null) {
@@ -53,7 +55,8 @@ public class Controller_client {
     public ResponseEntity<Object> Login(@RequestBody @Valid Dtos_cliente_login dtos_cliente_login) {
         Models_client_create client = services_clients.getClientForEmailAndPasswordEquals(dtos_cliente_login);
         if (client != null) {
-            return ResponseEntity.status(HttpStatus.FOUND).body(services_token.generateToken(client.getEmail(),client.getId().toString()));
+            return ResponseEntity.status(HttpStatus.FOUND)
+                    .body(services_token.generateToken(client.getEmail(), client.getId().toString()));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Not Found");
         }
@@ -66,12 +69,13 @@ public class Controller_client {
 
         } else {
             var client = services_clients.saveNewClients(dtos_cliente_create);
-            return ResponseEntity.status(HttpStatus.CREATED).body(services_token.generateToken(client.getEmail(),client.getId().toString()));
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body(services_token.generateToken(client.getEmail(), client.getId().toString()));
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Object> ModifyClientForId(@PathVariable(value = "id") String id,
+    public ResponseEntity<Object> ModifyClientForId(@PathVariable(value = "id") UUID id,
             @RequestBody @Valid Dtos_cliente_create dtos_cliente) {
         Models_client_create clientModel = services_clients.putClients(id, dtos_cliente);
         if (clientModel != null) {
@@ -84,7 +88,7 @@ public class Controller_client {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> DeleteClientForId(@PathVariable(value = "id") String id) {
+    public ResponseEntity<Object> DeleteClientForId(@PathVariable(value = "id") UUID id) {
 
         Models_client_create clientModel = services_clients.deleteClients(id);
         if (clientModel != null) {

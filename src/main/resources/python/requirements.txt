@@ -1,3 +1,4 @@
+pip install --upgrade pip
 yfinance
 investpy
 b3api

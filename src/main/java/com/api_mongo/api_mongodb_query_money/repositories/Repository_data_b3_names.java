@@ -1,14 +1,12 @@
 package com.api_mongo.api_mongodb_query_money.repositories;
 
-import java.util.Optional;
-import java.util.UUID;
-
+import java.util.List;
 import org.springframework.data.mongodb.repository.MongoRepository;
-
+import org.springframework.stereotype.Repository;
 import com.api_mongo.api_mongodb_query_money.models.Models_data_b3_names;
 
-public interface Repository_data_b3_names extends MongoRepository<Models_data_b3_names, UUID> {
+@Repository
+public interface Repository_data_b3_names extends MongoRepository<Models_data_b3_names, String> {
 
-    Optional<Models_data_b3_names> findByNameAction(String nameAction);
-
+    List<Models_data_b3_names> findByNameAction(String nameAction);
 }

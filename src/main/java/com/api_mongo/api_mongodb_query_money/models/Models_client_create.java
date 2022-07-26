@@ -4,26 +4,26 @@ import java.time.LocalDateTime;
 import java.util.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Configuration
-public class Models_client_create{
+@Document(collection = "Clients")
+public class Models_client_create {
 
     @Id
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UUID id;
 
     private String name;
 
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    
+
     private String email;
-    
+
     private LocalDateTime dataCreate;
 
     private LocalDateTime changeDate;
-
-
 
     public LocalDateTime getDataCreate() {
         return dataCreate;
@@ -72,8 +72,5 @@ public class Models_client_create{
     public void setEmail(String email) {
         this.email = email;
     }
-
-    
-
 
 }
