@@ -22,7 +22,7 @@ public class Services_data_Impl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<Models_client_create> usuario = repository.findByEmail(email);
-        if (usuario.isEmpty()) {
+        if (usuario.isPresent()) {
             throw new UsernameNotFoundException("Usuário [" + email + "] não encontrado");
         }
 
