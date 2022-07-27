@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import com.api_mongo.api_mongodb_query_money.models.Models_client_create;
 import com.api_mongo.api_mongodb_query_money.models.Models_client_details;
 import com.api_mongo.api_mongodb_query_money.repositories.Repository_clients;
