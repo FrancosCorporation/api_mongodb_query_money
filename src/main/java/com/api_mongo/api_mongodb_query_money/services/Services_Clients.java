@@ -12,30 +12,32 @@ import org.springframework.stereotype.Service;
 import com.api_mongo.api_mongodb_query_money.dtos.Dtos_cliente_create;
 import com.api_mongo.api_mongodb_query_money.dtos.Dtos_cliente_login;
 import com.api_mongo.api_mongodb_query_money.models.Models_client_create;
-import com.api_mongo.api_mongodb_query_money.repositories.Repository_clients;
+import com.api_mongo.api_mongodb_query_money.repositories.Repository_Clients;
 import com.api_mongo.api_mongodb_query_money.security.Auth_token;
+
+import lombok.var;
 
 @Service
 public class Services_clients {
 
-    private final Repository_clients Repository_clients;
+    private final Repository_Clients Repository_Clients;
     private final PasswordEncoder encoder;
 
-    public Services_clients(Repository_clients Repository_clients, Auth_token service_token,
+    public Services_clients(Repository_Clients Repository_Clients, Auth_token service_token,
             PasswordEncoder encoder) {
-        this.Repository_clients = Repository_clients;
+        this.Repository_Clients = Repository_Clients;
         this.encoder = encoder;
     }
 
     // Get ALL Clients
     public List<Models_client_create> getAllClients() {
-        return Repository_clients.findAll();
+        return Repository_Clients.findAll();
     }
 
     // Find by id and Get Client
     public Optional<Models_client_create> findClientForId(UUID id) {
         try {
-            Optional<Models_client_create> clientModelOptional = Repository_clients.findById(id);
+            Optional<Models_client_create> clientModelOptional = Repository_Clients.findById(id);
             if (clientModelOptional.isPresent()) {
                 return clientModelOptional;
             } else {
@@ -49,7 +51,7 @@ public class Services_clients {
     public Models_client_create getClientForEmailAndPasswordEquals(Dtos_cliente_login dtos_cliente_login) {
         try {
 
-            Optional<Models_client_create> client = Repository_clients.findByEmail(dtos_cliente_login.getEmail());
+            Optional<Models_client_create> client = Repository_Clients.findByEmail(dtos_cliente_login.getEmail());
             if (encoder.matches(dtos_cliente_login.getPassword(), client.get().getPassword())) {
                 return client.get();
             } else {
@@ -63,13 +65,13 @@ public class Services_clients {
 
     // Save the new Clients !
     public Models_client_create saveNewClients(Dtos_cliente_create dtos_cliente) {
-        var clientModel = new Models_client_create();
+        Models_client_create clientModel = new Models_client_create();
         BeanUtils.copyProperties(dtos_cliente, clientModel);
         clientModel.setId(UUID.randomUUID());
         clientModel.setDataCreate(LocalDateTime.now(ZoneId.of("UTC")));
         clientModel.setChangeDate(LocalDateTime.now(ZoneId.of("UTC")));
         clientModel.setPassword(encoder.encode(clientModel.getPassword()));
-        return Repository_clients.save(clientModel);
+        return Repository_Clients.save(clientModel);
     }
 
     // Find by id and Put Clients !
@@ -77,10 +79,10 @@ public class Services_clients {
 
         Optional<Models_client_create> clientModelOptional = findClientForId(id);
         if (clientModelOptional != null) {
-            var clientModelLocal = clientModelOptional.get();
+            Models_client_create clientModelLocal = clientModelOptional.get();
             BeanUtils.copyProperties(dtos_cliente, clientModelLocal);
             clientModelLocal.setChangeDate(LocalDateTime.now(ZoneId.of("UTC")));
-            Repository_clients.save(clientModelLocal);
+            Repository_Clients.save(clientModelLocal);
             return clientModelLocal;
         } else {
             return null;
@@ -92,7 +94,7 @@ public class Services_clients {
     public Models_client_create deleteClients(UUID id) {
         Optional<Models_client_create> clientModelOptional = findClientForId(id);
         if (clientModelOptional != null) {
-            Repository_clients.delete(clientModelOptional.get());
+            Repository_Clients.delete(clientModelOptional.get());
             return clientModelOptional.get();
         } else {
             return null;
@@ -102,7 +104,7 @@ public class Services_clients {
 
     // Verify email exist !
     public boolean verifyEmailExist(String email) {
-        if (!Repository_clients.findByEmail(email).isEmpty()) {
+        if (!Repository_Clients.findByEmail(email).isPresent()) {
             return true;
 
         } else {

@@ -20,6 +20,7 @@ import com.api_mongo.api_mongodb_query_money.dtos.Dtos_cliente_login;
 import com.api_mongo.api_mongodb_query_money.models.Models_client_create;
 import com.api_mongo.api_mongodb_query_money.security.Auth_token;
 import com.api_mongo.api_mongodb_query_money.services.*;
+import lombok.var;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -68,7 +69,7 @@ public class Controller_client {
             return ResponseEntity.status(HttpStatus.CONFLICT).body(" Email already exists ");
 
         } else {
-            var client = services_clients.saveNewClients(dtos_cliente_create);
+            Models_client_create client = services_clients.saveNewClients(dtos_cliente_create);
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(services_token.generateToken(client.getEmail(), client.getId().toString()));
         }
