@@ -18,6 +18,8 @@ target/
 *.iws
 *.iml
 *.ipr
+*/dadosBrutos.csv
+*dados2Brutos.csv
 
 ### NetBeans ###
 /nbproject/private/
@@ -39,3 +41,10 @@ db/journal/
 
 ### Arquivos Em conflito ###
 *.lock
+db/diagnostic.data/
+db/journal/
+*.wt
+*.lock
+*.bson
+*.turtle
+*WiredTiger

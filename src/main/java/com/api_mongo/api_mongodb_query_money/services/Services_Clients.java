@@ -33,9 +33,9 @@ public class Services_clients {
     }
 
     // Find by id and Get Client
-    public Optional<Models_client_create> findClientForId(String id) {
+    public Optional<Models_client_create> findClientForId(UUID id) {
         try {
-            Optional<Models_client_create> clientModelOptional = Repository_clients.findById(UUID.fromString(id));
+            Optional<Models_client_create> clientModelOptional = Repository_clients.findById(id);
             if (clientModelOptional.isPresent()) {
                 return clientModelOptional;
             } else {
@@ -73,7 +73,7 @@ public class Services_clients {
     }
 
     // Find by id and Put Clients !
-    public Models_client_create putClients(String id, Dtos_cliente_create dtos_cliente) {
+    public Models_client_create putClients(UUID id, Dtos_cliente_create dtos_cliente) {
 
         Optional<Models_client_create> clientModelOptional = findClientForId(id);
         if (clientModelOptional != null) {
@@ -89,7 +89,7 @@ public class Services_clients {
     }
 
     // Find by id and Delete Clients !
-    public Models_client_create deleteClients(String id) {
+    public Models_client_create deleteClients(UUID id) {
         Optional<Models_client_create> clientModelOptional = findClientForId(id);
         if (clientModelOptional != null) {
             Repository_clients.delete(clientModelOptional.get());
@@ -99,6 +99,7 @@ public class Services_clients {
         }
 
     }
+
     // Verify email exist !
     public boolean verifyEmailExist(String email) {
         if (!Repository_clients.findByEmail(email).isEmpty()) {

@@ -1,22 +1,29 @@
 package com.api_mongo.api_mongodb_query_money.models;
 
-import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotBlank;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import org.springframework.data.annotation.*;
-
+@Document(collection = "Wallet")
 public class Models_layout_data_client {
+
     @Id
-    @NotBlank
-    @NotNull
-    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    // @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UUID id;
-    
-    @NotBlank
-    @NotNull
-    private ArrayList<Models_layout_data_client_list> actionsAndPrice ;
+
+    private List<Models_layout_data_client_list> actionsAndPrice;
+
+    public Models_layout_data_client() {
+
+    }
+
+    public Models_layout_data_client(UUID id, List<Models_layout_data_client_list> actionsAndPrice) {
+        this.id = id;
+        this.actionsAndPrice = actionsAndPrice;
+    }
 
     public UUID getId() {
         return id;
@@ -26,12 +33,12 @@ public class Models_layout_data_client {
         this.id = id;
     }
 
-    public ArrayList<Models_layout_data_client_list> getActionsAndPrice() {
+    public List<Models_layout_data_client_list> getActionsAndPrice() {
         return actionsAndPrice;
     }
 
-    public void setActionsAndPrice(ArrayList<Models_layout_data_client_list> actionsAndPrice) {
+    public void setActionsAndPrice(List<Models_layout_data_client_list> actionsAndPrice) {
         this.actionsAndPrice = actionsAndPrice;
     }
-    
+
 }

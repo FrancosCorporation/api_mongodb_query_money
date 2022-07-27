@@ -1,6 +1,6 @@
 package com.api_mongo.api_mongodb_query_money.models;
 
-public class Models_data_b3 extends Models_data_b3_names{
+public class Models_data_b3 {
 
     private String Date;
     private String Open;
@@ -9,16 +9,6 @@ public class Models_data_b3 extends Models_data_b3_names{
     private String Close;
     private String Price;
     private String Volume;
-
-    public Models_data_b3(String[] listData) {
-        this.Date = listData[0];
-        this.Open = listData[1];
-        this.High = listData[2];
-        this.Low = listData[3];
-        this.Close = listData[4];
-        this.Price = listData[5];
-        this.Volume = listData[6];
-    }
 
     public String getDate() {
         return Date;
