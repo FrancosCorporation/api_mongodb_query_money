@@ -10,7 +10,7 @@ import java.util.UUID;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 @Repository
-interface Repository_clients extends MongoRepository<Models_client_create, UUID> {
+public interface Repository_clients extends MongoRepository<Models_client_create, UUID> {
 
     Optional<Models_client_create> findByEmail(String email);
 
