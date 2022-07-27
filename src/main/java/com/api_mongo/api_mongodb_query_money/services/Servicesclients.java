@@ -16,12 +16,12 @@ import com.api_mongo.api_mongodb_query_money.repositories.Repository_clients;
 import com.api_mongo.api_mongodb_query_money.security.Auth_token;
 
 @Service
-public class Services_clients {
+public class Servicesclients {
 
     private final Repository_clients Repository_clients;
     private final PasswordEncoder encoder;
 
-    public Services_clients(Repository_clients Repository_clients, Auth_token service_token,
+    public Servicesclients(Repository_clients Repository_clients, Auth_token service_token,
             PasswordEncoder encoder) {
         this.Repository_clients = Repository_clients;
         this.encoder = encoder;

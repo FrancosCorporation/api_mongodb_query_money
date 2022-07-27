@@ -25,14 +25,14 @@ import com.api_mongo.api_mongodb_query_money.services.*;
 public class Controller_layout_client {
 
     private final Services_layout_data_client services_layout_data_client;
-    private final Services_clients services_clients;
+    private final Servicesclients servicesclients;
     private final Services_data_b3_names services_data_b3_names;
     // Models_layout_data_client
 
     public Controller_layout_client(Services_layout_data_client services_layout_data_client,
-            Services_clients services_clients, Services_data_b3_names services_data_b3_names) {
+            Servicesclients servicesclients, Services_data_b3_names services_data_b3_names) {
         this.services_layout_data_client = services_layout_data_client;
-        this.services_clients = services_clients;
+        this.servicesclients = servicesclients;
         this.services_data_b3_names = services_data_b3_names;
     }
 
@@ -72,7 +72,7 @@ public class Controller_layout_client {
         try {
 
             // verify thats id is valid
-            if (services_clients.findClientForId(models_layout_data_client.getId()).isPresent()) {
+            if (servicesclients.findClientForId(models_layout_data_client.getId()).isPresent()) {
                 // verify thats Action name exist and set the list with thens
                 models_layout_data_client = services_layout_data_client
                         .returnNameActionsExist(models_layout_data_client);
