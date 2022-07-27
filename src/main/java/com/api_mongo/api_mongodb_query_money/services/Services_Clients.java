@@ -65,7 +65,7 @@ public class Services_clients {
 
     // Save the new Clients !
     public Models_client_create saveNewClients(Dtos_cliente_create dtos_cliente) {
-        var clientModel = new Models_client_create();
+        Models_client_create clientModel = new Models_client_create();
         BeanUtils.copyProperties(dtos_cliente, clientModel);
         clientModel.setId(UUID.randomUUID());
         clientModel.setDataCreate(LocalDateTime.now(ZoneId.of("UTC")));
@@ -79,7 +79,7 @@ public class Services_clients {
 
         Optional<Models_client_create> clientModelOptional = findClientForId(id);
         if (clientModelOptional != null) {
-            var clientModelLocal = clientModelOptional.get();
+            Models_client_create clientModelLocal = clientModelOptional.get();
             BeanUtils.copyProperties(dtos_cliente, clientModelLocal);
             clientModelLocal.setChangeDate(LocalDateTime.now(ZoneId.of("UTC")));
             Repository_Clients.save(clientModelLocal);
