@@ -20,7 +20,7 @@ import com.api_mongo.api_mongodb_query_money.services.*;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/wallet")
-public class Controller_layout_client extends Thread {
+public class Controller_layout_client {
 
     private final Services_layout_data_client services_layout_data_client;
     private final Services_clients services_clients;

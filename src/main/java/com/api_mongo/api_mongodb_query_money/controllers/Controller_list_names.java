@@ -11,7 +11,7 @@ import com.api_mongo.api_mongodb_query_money.services.*;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/api/actionnames")
-public class Controller_list_names extends Thread {
+public class Controller_list_names {
 
     private final Services_data_list_names services_data_list_names;
 
