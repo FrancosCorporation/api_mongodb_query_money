@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.api_mongo.api_mongodb_query_money.models.Models_data_b3_names;
 
 @Repository
-public interface Repository_data_b3_names extends MongoRepository<Models_data_b3_names, String> {
+interface Repository_data_b3_names extends MongoRepository<Models_data_b3_names, String> {
 
     List<Models_data_b3_names> findByNameAction(String nameAction);
 }

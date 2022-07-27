@@ -7,6 +7,6 @@ import java.util.UUID;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 @Repository
-public interface Repository_layout_data_client extends MongoRepository<Models_layout_data_client, UUID> {
+interface Repository_layout_data_client extends MongoRepository<Models_layout_data_client, UUID> {
 
 }

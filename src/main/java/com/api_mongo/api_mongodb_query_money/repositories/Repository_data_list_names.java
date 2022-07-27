@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import com.api_mongo.api_mongodb_query_money.models.Models_data_list_names;
 
 @Repository
-public interface Repository_data_list_names extends MongoRepository<Models_data_list_names, String> {
+interface Repository_data_list_names extends MongoRepository<Models_data_list_names, String> {
 
 }
