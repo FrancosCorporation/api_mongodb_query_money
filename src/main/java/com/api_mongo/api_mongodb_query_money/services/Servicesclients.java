@@ -102,7 +102,7 @@ public class Servicesclients {
 
     // Verify email exist !
     public boolean verifyEmailExist(String email) {
-        if (!Repository_clients.findByEmail(email).isPresent()) {
+        if (Repository_clients.findByEmail(email).isPresent()) {
             return true;
 
         } else {

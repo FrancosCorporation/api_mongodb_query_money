@@ -2,9 +2,7 @@ package com.api_mongo.api_mongodb_query_money.services;
 
 import com.api_mongo.api_mongodb_query_money.models.Models_data_b3_names;
 import com.api_mongo.api_mongodb_query_money.repositories.Repository_data_b3_names;
-import com.mongodb.client.MongoClient;
 import java.util.List;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
