@@ -313,9 +313,30 @@
     const icon = searchWrapper.querySelector(".icon");
     let linkTag = searchWrapper.querySelector("a");
     let webLink;
-    var arraylistActions = new Array();
+    arrayNameActions = [];
+    arrayIdActions = [];
 
-    let request = new XMLHttpRequest();
+    if(localStorage.getItem("arrayNameActions")!=null && localStorage.getItem("arrayIdActions")!=null){
+      arrayNameActions = JSON.parse(localStorage.getItem("arrayNameActions"));
+      arrayIdActions = JSON.parse(localStorage.getItem("arrayIdActions"));
+    }
+    else{
+      finddatadb();
+    }
+
+    function returnarray(array) { 
+      localNameActions = [];
+      localIdActions = [];
+      for (let i = 0; i < JSON.parse(array).length; i++) {
+        localNameActions.push(JSON.parse(array)[i]["nameAction"]);
+        localIdActions.push(JSON.parse(array)[i]["id"]);
+      }
+      localStorage.setItem("arrayNameActions", JSON.stringify(localNameActions));
+      localStorage.setItem("arrayIdActions", JSON.stringify(localIdActions));
+    }
+    
+    function finddatadb() {
+      let request = new XMLHttpRequest();
     request.open("GET", "/api/actionnames", true);
     request.setRequestHeader("Content-Type", "application/json");
     request.setRequestHeader(
@@ -324,14 +345,17 @@
     );
     request.send(JSON.stringify(body));
     request.onload = async function () {
-      for (let i = 0; i < JSON.parse(request.responseText).length; i++) {
-        arraylistActions.push(JSON.parse(request.responseText)[i]);
+      if(request.status === 403){
+        localStorage.removeItem("token");
+        localStorage.removeItem("nameAction");
+        localStorage.removeItem("id");
+        location.replace("/login");
       }
-    };
-    console.log(arraylistActions);
-    console.log(arraylistActions[0]);
-    console.log(arraylistActions.length);
-
+      else{
+        returnarray(request.responseText);
+      }
+    };      
+    }
 
     // if user press any key and release
     inputBox.onkeyup = (e) => {
