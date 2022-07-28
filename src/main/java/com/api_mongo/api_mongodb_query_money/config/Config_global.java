@@ -82,7 +82,7 @@ public class Config_global {
 
             @Override
             public void run() {
-                String way = "src/main/resources/python/dadosBrutos.csv ";
+                String way = "src/main/resources/python/dadosBrutos.csv";
                 String mark = "Date;Open;High;Low;Close;Price;Volume;";
                 String line = "";
                 String nameAct = "";
