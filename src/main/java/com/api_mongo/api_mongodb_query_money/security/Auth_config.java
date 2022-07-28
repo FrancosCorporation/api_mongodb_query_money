@@ -37,7 +37,6 @@ public class Auth_config extends WebSecurityConfigurerAdapter {
         http.csrf().disable().authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/").permitAll()
                 .antMatchers(HttpMethod.GET, "/login").permitAll()
-                .antMatchers(HttpMethod.GET, "/src/main/resources/templates/logo.png").permitAll()
                 .antMatchers(HttpMethod.GET, "/swagger-ui/index,html").permitAll()
                 .antMatchers(HttpMethod.GET, "/account").permitAll()
                 .antMatchers(HttpMethod.GET, "/account2").permitAll()

@@ -12,13 +12,13 @@
         font-size: 0.9rem;
       }
       #inputSearch {
-          position: relative;
-          margin-top: 13px;
-          margin-left: 60%;
-          margin-right: 70px;
-          width: 100%;
-          z-index: 1;
-        }
+        position: relative;
+        margin-top: 13px;
+        margin-left: 60%;
+        margin-right: 70px;
+        width: 100%;
+        z-index: 1;
+      }
       /*#search-Bar {
         position: relative;
         font-size: 100%;
@@ -69,7 +69,7 @@
           transition: 0.5s;
         }
         .main input:checked ~ .menu {
-          width: 240px;
+          width: 250px;
         }
         .menu li {
           list-style: none;
@@ -166,7 +166,7 @@
           transition: 0.5s;
         }
         .main input:checked ~ .menu {
-          width: 320px;
+          width: 250px;
         }
         .menu li {
           list-style: none;
@@ -249,7 +249,7 @@
         </div>
 
         <div id="search-Bar">
-          <div id="icon" >
+          <div id="icon">
             <a class="navbar-brand" href="/account">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -260,7 +260,7 @@
                 viewBox="0 0 16 16"
               >
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                <path  
+                <path
                   fill-rule="evenodd"
                   d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
                 />
@@ -291,12 +291,14 @@
   <script>
     var check = document.getElementById("checkbox");
     check.addEventListener("click", function (event) {
-      if(check.checked === true && (document.documentElement.clientWidth.toString() <= "521px")){
+      if (
+        check.checked === true &&
+        document.documentElement.clientWidth.toString() <= "521px"
+      ) {
         document.getElementById("icon").style.marginTop = "0.1rem";
         document.getElementById("search-Bar").style.display = "none";
         document.getElementById("inputSearch").style.display = "none";
-      }
-      else {
+      } else {
         document.getElementById("search-Bar").style.display = "flex";
         document.getElementById("inputSearch").style.display = "flex";
         document.getElementById("icon").style.marginTop = "";
@@ -304,34 +306,6 @@
         document.getElementById("inputSearchwrite").style.height = "";
       }
     });
-    let suggestions = [
-      "Channel",
-      "CodingLab",
-      "CodingNepal",
-      "YouTube",
-      "YouTuber",
-      "YouTube Channel",
-      "Blogger",
-      "Bollywood",
-      "Vlogger",
-      "Vechiles",
-      "Facebook",
-      "Freelancer",
-      "Facebook Page",
-      "Designer",
-      "Developer",
-      "Web Designer",
-      "Web Developer",
-      "Login Form in HTML & CSS",
-      "How to learn HTML & CSS",
-      "How to learn JavaScript",
-      "How to become Freelancer",
-      "How to become Web Designer",
-      "How to start Gaming Channel",
-      "How to start YouTube Channel",
-      "What does HTML stands for?",
-      "What does CSS stands for?",
-    ];
     // getting all required elements
     const searchWrapper = document.getElementById("inputSearch");
     const inputBox = document.getElementById("inputSearchwrite");
@@ -339,6 +313,25 @@
     const icon = searchWrapper.querySelector(".icon");
     let linkTag = searchWrapper.querySelector("a");
     let webLink;
+    var arraylistActions = new Array();
+
+    let request = new XMLHttpRequest();
+    request.open("GET", "/api/actionnames", true);
+    request.setRequestHeader("Content-Type", "application/json");
+    request.setRequestHeader(
+      "Authorization",
+      "Bearer " + localStorage.getItem("token")
+    );
+    request.send(JSON.stringify(body));
+    request.onload = async function () {
+      for (let i = 0; i < JSON.parse(request.responseText).length; i++) {
+        arraylistActions.push(JSON.parse(request.responseText)[i]);
+      }
+    };
+    console.log(arraylistActions);
+    console.log(arraylistActions[0]);
+    console.log(arraylistActions.length);
+
 
     // if user press any key and release
     inputBox.onkeyup = (e) => {

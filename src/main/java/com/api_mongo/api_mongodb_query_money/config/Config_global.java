@@ -73,7 +73,7 @@ public class Config_global {
     @Bean
     public void insereArquivos() {
         System.out.println(new SimpleDateFormat("yyyy/MM/dd").format(new Date())); // 2022/07/20
-        // rotina();
+        rotina();
 
     }
 
