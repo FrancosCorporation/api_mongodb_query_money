@@ -73,7 +73,7 @@ public class Config_global {
     @Bean
     public void insereArquivos() {
         System.out.println(new SimpleDateFormat("yyyy/MM/dd").format(new Date())); // 2022/07/20
-        rotina();
+        // rotina();
 
     }
 
@@ -162,7 +162,7 @@ public class Config_global {
                     System.out.println("\n Salvou e Finalizou! \n");
                     br.close();
                 } catch (Exception e) {
-                    System.out.println("File not found" + e);
+                    System.out.println("\n File not found \n" + e);
                 }
             }
         }.start();
