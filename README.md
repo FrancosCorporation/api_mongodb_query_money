@@ -1,5 +1,24 @@
 # API MongoDB Query Money
 
+## 🐳 Instalação e Execução (Docker) — recomendado
+
+### Pré-requisitos
+- [Docker](https://docs.docker.com/get-docker/) + Docker Compose
+
+### Rodar com Docker
+```bash
+docker compose up --build
+```
+```bash
+docker run --rm -v $(pwd):/src -w /src maven:3.8-openjdk-17 mvn spring-boot:run
+```
+
+### Sem Docker (local)
+```bash
+# Requer JDK 17 + Maven
+mvn spring-boot:run
+```
+
 API REST em **Spring Boot** para consulta e organização de dados do mercado financeiro (cotações da B3) sobre **MongoDB**, com autenticação **JWT** e documentação interativa via **Swagger**.
 
 ![Java](https://img.shields.io/badge/Java-11-ED8B00?style=flat-square&logo=openjdk&logoColor=white)
