@@ -23,12 +23,12 @@ import com.api_mongo.api_mongodb_query_money.services.*;
 public class Controller_layout_client extends Thread {
 
     private final Services_layout_data_client services_layout_data_client;
-    private final Services_clients services_clients;
+    private final Services_Clients services_clients;
     private final Services_data_b3_names services_data_b3_names;
     // Models_layout_data_client
 
     public Controller_layout_client(Services_layout_data_client services_layout_data_client,
-            Services_clients services_clients, Services_data_b3_names services_data_b3_names) {
+            Services_Clients services_clients, Services_data_b3_names services_data_b3_names) {
         this.services_layout_data_client = services_layout_data_client;
         this.services_clients = services_clients;
         this.services_data_b3_names = services_data_b3_names;

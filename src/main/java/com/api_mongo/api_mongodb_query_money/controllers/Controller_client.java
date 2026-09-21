@@ -26,10 +26,10 @@ import com.api_mongo.api_mongodb_query_money.services.*;
 @RequestMapping("/api/client")
 public class Controller_client {
 
-    private final Services_clients services_clients;
+    private final Services_Clients services_clients;
     private final Auth_token services_token;
 
-    public Controller_client(Services_clients services_clients, Auth_token services_token) {
+    public Controller_client(Services_Clients services_clients, Auth_token services_token) {
         this.services_clients = services_clients;
         this.services_token = services_token;
     }
