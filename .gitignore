@@ -42,3 +42,6 @@ db/journal/
 *.bson
 *.turtle
 *WiredTiger
+### Artefatos locais
+db/mongod.exe
+*.log
