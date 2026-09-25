@@ -45,3 +45,5 @@ db/journal/
 ### Artefatos locais
 db/mongod.exe
 *.log
+node_modules/
+package-lock.json

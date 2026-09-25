@@ -1,100 +1,80 @@
 # API MongoDB Query Money
 
-## 🐳 Instalação e Execução (Docker) — recomendado
+![Node](https://img.shields.io/badge/Node-Express-green?logo=node.js&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Mongoose-47A248?logo=mongodb&logoColor=white)
+![JWT](https://img.shields.io/badge/auth-JWT%20HS512-red)
+![Tests](https://img.shields.io/badge/testes-13%2F13%20passando-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-### Pré-requisitos
-- [Docker](https://docs.docker.com/get-docker/) + Docker Compose
+API REST de **carteira de ações** — port **Node/Express + Mongoose** do projeto
+**Spring Boot** de 2022, com os 29 fontes Java originais preservados em [`java/`](java/).
 
-### Rodar com Docker
+## Endpoints
+
+| Método | Rota | Auth | Descrição |
+|---|---|---|---|
+| POST | `/api/client/register` | pública | cria cliente (BCrypt) |
+| POST | `/api/client/login` | pública | devolve **JWT HS512** (24h) |
+| GET | `/api/client` | Bearer | lista clientes (sem senhas) |
+| GET/PUT/DELETE | `/api/client/{id}` | Bearer | busca / altera / remove cliente |
+| POST | `/api/wallet/register` | Bearer | cria/faz **merge** da carteira (só ações existentes em `ActionName`) |
+| GET | `/api/wallet` · `/api/wallet/all` | Bearer | lista carteiras |
+| GET | `/api/wallet/{id}` | Bearer | carteira do cliente |
+| GET | `/api/actionnames` | Bearer | nomes de ações cadastrados |
+
+## Instalação e execução
+
+**Com Docker (recomendado — sobe Mongo + API):**
 ```bash
-docker compose up --build
+docker compose up
+# API em http://localhost:3000
 ```
+
+**Local (requer MongoDB em localhost:27017):**
 ```bash
-docker run --rm -v $(pwd):/src -w /src maven:3.8-openjdk-17 mvn spring-boot:run
+npm install
+npm start
 ```
 
-### Sem Docker (local)
+**Testes (Mongo em memória, sem Docker):**
 ```bash
-# Requer JDK 17 + Maven
-mvn spring-boot:run
+npm test   # 13 testes de integração HTTP reais
 ```
 
-API REST em **Spring Boot** para consulta e organização de dados do mercado financeiro (cotações da B3) sobre **MongoDB**, com autenticação **JWT** e documentação interativa via **Swagger**.
+Variáveis de ambiente: `MONGO_URI` (default `mongodb://localhost:27017/query_money`),
+`JWT_SECRET` (default = o secret histórico do projeto — troque em produção), `PORT` (3000).
 
-![Java](https://img.shields.io/badge/Java-11-ED8B00?style=flat-square&logo=openjdk&logoColor=white)
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot-2.x-6DB33F?style=flat-square&logo=springboot&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT-black?style=flat-square&logo=jsonwebtokens)
-![License](https://img.shields.io/badge/license-MIT-green?style=flat-square)
-![Status](https://img.shields.io/badge/status-conclu%C3%ADdo%20(estudo)-blue?style=flat-square)
+## Fidelidade ao Spring Boot original
 
-## Sobre
+| Original (Spring Boot) | Port (Node) |
+|---|---|
+| `@RestController` + `@RequestMapping("/api/...")` | rotas Express idênticas |
+| Spring Security `Auth_config`/`Auth_filter` (Bearer) | middleware `exigirToken` |
+| `Auth_token`: JWT HS512, expiração 86400000 ms, subject=e-mail, jwtid=id | `jsonwebtoken` igualzinho |
+| `BCryptPasswordEncoder` | `bcryptjs` (hash custo 10) |
+| `Services_layout_data_client.returnNameActionsExist` (filtra ações) + merge de carteira | mesma regra no controller de wallet |
+| SpringFox/Swagger | endpoints na tabela acima (README como documentação) |
 
-Back-end de estudo para armazenar e consultar dados de ações negociadas na B3
-(por exemplo, `AGRO3.SA`) e montar visões/layouts por cliente. O projeto explora
-uma arquitetura em camadas (controllers, services, repositories, dtos, models),
-segurança com Spring Security + JWT e persistência em MongoDB, além de um
-workflow de build e push de imagem para Amazon ECR/ECS.
+## Estrutura
 
-> **Projeto de estudo** — desenvolvido em 2022 para praticar Spring Boot,
-> MongoDB e autenticação por token.
+```
+api_mongodb_query_money/
+├── server.js                 # app Express + rotas + conexão Mongo
+├── src/
+│   ├── models/index.js       # Client, ActionName, Wallet, DataB3 (Mongoose)
+│   ├── middleware/auth.js    # JWT HS512 (geração + verificação Bearer)
+│   └── controllers/index.js  # regras dos 3 controllers originais
+├── test/api-test.mjs         # 13 testes de integração (Mongo em memória)
+├── docker-compose.yml        # mongo + api prontos
+└── java/                     # ✔ PROJETO ORIGINAL 2022 preservado (29 fontes)
+    └── main/java/com/api_mongo/api_mongodb_query_money/
+```
 
-## Funcionalidades
-
-Comprovadas pelo código em `src/main/java`:
-
-- **Clientes**: cadastro (`Dtos_cliente_create`) e login (`Dtos_cliente_login`)
-  com senha e geração de token.
-- **Dados da B3**: modelos `Models_data_b3` / `Models_data_b3_names` e
-  repositórios para consulta das cotações e dos nomes dos papéis.
-- **Listas e layouts por cliente**: `Repository_data_list_names`,
-  `Repository_layout_data_client` e serviços correspondentes para montar a
-  visão personalizada de cada cliente.
-- **Segurança**: filtro e validação de JWT (`security/Auth_*`) e configuração de
-  CORS/segurança (`Auth_config`).
-- **Documentação**: **Swagger** habilitado via SpringFox (`SpringFoxConfig`),
-  acessível em `/swagger-ui/`.
-- **CI/CD**: workflow em `.github/workflows/aws.yml` para build da imagem Docker
-  e deploy no Amazon ECS (requer secrets de AWS configurados).
-
-## Stack
-
-- **Java** + **Spring Boot** (Web, Data MongoDB, Security)
-- **MongoDB** (driver oficial)
-- **JWT** (jjwt) + BCrypt
-- **SpringFox** (Swagger/OpenAPI)
-- **Maven** (wrapper incluso: `./mvnw`)
-- **Docker** + **Amazon ECR/ECS** (workflow opcional)
-
-## Como rodar
-
-Requisitos: JDK 11+ e um MongoDB acessível.
+### Rodar a versão Java original (histórica)
 
 ```bash
-# opção 1: MongoDB local
-# (no Windows havia um mongod.exe versionado em db/; recomendado instalar
-#  o MongoDB Community Server e removê-lo do repositório)
-
-# configuração
-# ajuste a URI do MongoDB em src/main/resources/application.properties
-
-# rodar
-./mvnw spring-boot:run
-```
-
-A documentação do Swagger fica disponível em `http://localhost:8080/swagger-ui/`.
-
-## Estrutura do projeto
-
-```
-src/main/java/com/api_mongo/api_mongodb_query_money/
-├── config/          # Configurações gerais e Swagger
-├── controllers/     # Endpoints REST
-├── dtos/            # Objetos de entrada/saída
-├── models/          # Documentos do MongoDB
-├── repositories/    # Interfaces do Spring Data
-├── security/        # Filtros e validação de JWT
-└── services/        # Regras de negócio
+cd java
+mvn spring-boot:run   # requer JDK 17+ e Maven
 ```
 
 ## Licença
