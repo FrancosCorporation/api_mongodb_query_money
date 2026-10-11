@@ -11,20 +11,25 @@ services:
       retries: 10
 
   api:
-    image: node:20-alpine
-    working_dir: /app
+    build: .
+    restart: unless-stopped
     depends_on:
       mongo:
         condition: service_healthy
     environment:
       MONGO_URI: mongodb://mongo:27017/query_money
-      JWT_SECRET: ${JWT_SECRET:-troque-este-secret-em-producao}
+      JWT_SECRET: ${JWT_SECRET:-}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-}
+      TRUST_PROXY: ${TRUST_PROXY:-}
       PORT: "3000"
+      NODE_ENV: production
     ports:
-      - "3000:3000"
-    volumes:
-      - .:/app
-    command: sh -c "npm install --omit=dev && npm start"
+      - "127.0.0.1:3000:3000"
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
 
 volumes:
   dados_mongo:

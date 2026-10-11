@@ -46,4 +46,6 @@ db/journal/
 db/mongod.exe
 *.log
 node_modules/
-package-lock.json
+.env
+.env.*
+!.env.example

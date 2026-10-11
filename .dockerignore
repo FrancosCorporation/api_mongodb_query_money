@@ -1,0 +1,11 @@
+.git
+.github
+.planning
+node_modules
+java
+target
+.env
+.env.*
+!.env.example
+*.log
+npm-debug.log*

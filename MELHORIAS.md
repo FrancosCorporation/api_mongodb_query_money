@@ -678,3 +678,16 @@ curl -s -o /dev/null -w '%{http_code}\n' -X DELETE http://localhost:3000/api/cli
 
 *Fim do plano. Gerado por leitura direta do código em 2026-10-02. Nenhum item já estava corrigido*
 *— todos apontam para defeitos ainda presentes.*
+
+## Registro da execução — 2026-10-11
+
+Implementados no código ativo: SEC-01 a SEC-08, BUG-01 a BUG-03, IMP-01/02, DEVOPS-01 a
+DEVOPS-03 e DOC-01/02. O login agora limita falhas por e-mail/IP, as rotas usam um tratamento
+central de erros e a configuração de Docker, CORS, cabeçalhos, variáveis e documentação foi
+atualizada. `test/bootstrap.mjs` apenas fornece um segredo efêmero ao processo de testes; nenhum
+caso de teste foi criado ou alterado.
+
+Pendente: TEST-01 e TEST-02 não foram implementados, e nenhum teste, build ou serviço foi
+executado nesta etapa. Por isso os critérios de aceite e caixas de seleção acima continuam
+abertos. A rotação do segredo JWT no ambiente implantado e eventual remoção do segredo antigo do
+histórico Git também dependem de ações fora deste diretório.
