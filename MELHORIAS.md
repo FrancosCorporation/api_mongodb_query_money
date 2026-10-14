@@ -691,3 +691,5 @@ Pendente: TEST-01 e TEST-02 não foram implementados, e nenhum teste, build ou s
 executado nesta etapa. Por isso os critérios de aceite e caixas de seleção acima continuam
 abertos. A rotação do segredo JWT no ambiente implantado e eventual remoção do segredo antigo do
 histórico Git também dependem de ações fora deste diretório.
+
+- **BUG-04 (2026-10-14):** `exigirToken` lia `payload.jwtid`, mas o jsonwebtoken grava `jti` — tokens válidos recebiam 401 (todas as rotas protegidas quebradas desde 11/10). Corrigido; CI `38526240649` verde. Bootstrap de teste restaurado (faltava no índice).
